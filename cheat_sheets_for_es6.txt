@@ -1,0 +1,901 @@
+map()
+->it's give new array always
+->it's also use to set data into inner html
+->it's give a particular data only
+/*example of map */ 
+//MAP Method
+const people = [
+    {
+        name:'bob',
+        age:20,
+        position:'developer',
+    },{
+        name:'anna',
+        age:25,
+        position:'designer',
+    },{
+        name:'susy',
+        age:30,
+        position:'the boss',
+    }
+];
+//Quokka.js - Extension
+//returns a new array
+//does not change the size of original array(unlike filter)
+//uses values from original array when making new one
+//first way
+const ages1 = people.map((person)=>{
+    return person.age;
+})
+console.log(ages1)
+//second way
+const ages2 = people.map((person)=> person.age)
+console.log(ages2)
+
+const newPeople = people.map((item)=>{
+    return{
+        firstName:item.name.toUpperCase(),
+        oldAge:item.age+20
+    };
+});
+console.log(newPeople);
+
+const names = people.map((person)=>`<h2>${person.name}</h2>`);
+const result = document.getElementById("result");
+result.innerHTML=names.join('')
+**********************************************************************************************
+set()
+->it's give only unique data
+->map-get all instances
+->new set - narroww down
+->['all',...]-turn it back to array.
+
+
+/*Example of set */
+const menu=[
+    {
+        name:'pancakes',
+        category:'breakfast',
+    },
+    {
+        name:'burger',
+        category:'lunch',
+    },
+    {
+        name:'steak',
+        category:'dinner',
+    },
+    {
+        name:'bacon',
+        category:'breakfast',
+    },
+    {
+        name:'banana',
+        category:'breakfast',
+    },
+    {
+        name:'pasta',
+        category:'dinner',
+    },
+]
+
+//map-get all instances
+//new set - narroww down
+//['all',...]-turn it back to array
+
+
+const categories = ['all',...new Set(menu.map((item)=>item.category))];
+console.log(categories)
+const result = document.getElementById('result');
+result.innerHTML=categories.map((category)=>{
+    return `<button>${category}</button>`
+}).join(' ')
+****************************************************************************************
+
+3-dynamic-property-keys
+
+
+//dot notation
+const person = {
+    name:'john',
+};
+console.log(person.name); 
+person.age=25
+console.log(person);
+//square bracket notation
+
+const items={
+    'featured-items':['item1','item2'],
+};
+
+console.log(items['featured-items']);
+console.log(person['name']);
+
+let appState = 'loading';
+appState = 'error';
+const keyName='computer';
+const app={
+    [appState]:true
+}
+app[keyName]='apple'
+console.log(app);
+const state = {
+    loading:true,
+    name:'',
+    job:''
+}
+
+function updateState(key,value){
+    state[key]=value
+}
+updateState('name','kush')
+updateState('job','developer')
+updateState('loading',false)
+
+console.log(state)
+
+
+*****************************************************************************************
+
+4-filter-find
+
+//Filter - returns a new array, can manipulate the size of new array (unlike map), returns based on condition
+//Find - returns single instance (object), return first match, if no match - undefined
+
+const people=[
+    {name:'bob',age:20,position:'developer'},
+    {name:'peter',age:25,position:'designer'},
+    {name:'susy',age:30,position:'the boss'},
+    {name:'anna',age:35,position:'intern'},
+];
+
+//filter
+const youngPeople = people.filter((person)=>{
+    // if(person.age<30){
+    //     return person;
+    // }
+    return person.age<30
+})
+console.log(youngPeople);
+const developers =people.filter((person)=>person.position==='developer')
+console.log(developers)
+//no match
+const seniorDevs =people.filter((item)=>item.position==='senior dev');
+console.log(seniorDevs)
+//find
+const peter = people.find((person)=>person.name==='peter');
+console.log(peter);
+//no match
+const oldPerson = people.find((person)=>person.age > 35);
+console.log(oldPerson); 
+//multiple matches - first match
+const randomPerson = people.find((person)=>person.age>35);
+console.log(randomPerson)
+*****************************************************************************************
+reduce
+
+//Reduce
+//iterates,callback function
+//reduces to a single value - number, array, object
+//1st parameter ('acc') - total of all calcculations
+//2st parameter ('curr') - current iteration/value
+const staff=[
+    {name:'bob',age:20,position:'developer',salary:100},
+    {name:'peter',age:25,position:'designer',salary:300},
+    {name:'susy',age:30,position:'the boos',salary:400},
+    {name:'anna',age:35,position:'intern',salary:10},
+]
+
+const dailyTotal = staff.reduce((total,person)=>{
+    total+=person.salary
+    return total
+},0)
+console.log(dailyTotal)
+*****************************************************************************************
+6-reduce-objects
+//Reducr - objects
+
+//cart example
+const cart = [
+    {
+        title:'sumsung Galaxy s7',
+        price:599.99,
+        amount:1,
+    },
+    {
+        title:'google pixel',
+        price:499.99,
+        amount:2,
+    },
+    {
+        title:'Xiaomi Redmi Note 2',
+        price:699.99,
+        amount:4,
+    },
+    {
+        title:'Xiaomi Redmi Note 5',
+        price:399.99,
+        amount:3,
+    }
+]
+
+let total =cart.reduce((total,cartItem)=>{
+    const {amount,price}=cartItem
+    total.totalItem+=amount
+    total.cartTotal+=amount*price
+    return total
+},{
+    totalItem:0,
+    cartTotal:0,
+})
+
+console.log(total);
+*****************************************************************************************
+7-Array 
+//faster/easier way to access/unpack variables from arrays
+const fruits=['orange','banana','lemon'];
+const friends=['john','peter','bob','anna','kelly'];
+
+const fruit1=fruits[0]
+const fruit2=fruits[1]
+const fruit3=fruits[2]
+console.log(fruit1,fruit2,fruit3)
+
+const[john,peter,bob,anna,kelly]=friends
+
+console.log(john,peter,bob,anna,kelly)
+
+
+*****************************************************************************************
+8 ojects
+
+//faster/easier way to access/unpack variables from objects
+
+const bob={
+    first:'bob',
+    last:'sanders',
+    city:'chicago',
+    siblings:{
+        sister:'jane'
+    },
+};
+
+const last='some value';
+const {last:shakeandBake,first,city,zip}=bob
+console.log(first,city,zip,shakeandBake);
+
+
+
+
+
+
+// const firstName=bob.first;
+// const lastName=bob.last;
+// const sister=bob.siblings.sister;
+
+// console.log(firstName,lastName,sister);
+*****************************************************************************************
+9 restOperater
+
+//Rest Operator
+//gathers/collects items
+//destructuring,function
+//placement important, careful with the same name
+//rest when declare function, spread when invoke the function
+
+//arrays
+const fruits=['apple','orange','lemon','banana'];
+const [first,...restofTheFryits]=fruits;
+console.log(first,restofTheFryits);
+const specificFruit=restofTheFryits.find((fruit)=>fruit==='lemon');
+console.log(specificFruit);
+
+//objects
+const person={name:'john',lastName:'smith',job:'developer'};
+const { name,...rest }=person;
+console.log(name,rest)
+
+//function
+const getAverage=(name,...scores)=>{
+    console.log(name);
+    console.log(scores);
+    const average=scores.reduce((total,item)=>{return total+=item},0)/scores.length;
+    console.log(average);
+}
+
+getAverage(person.name,86,79,69,99)
+*****************************************************************************************
+10 spread operater
+
+//spread Operator...
+//Allows and iterable to spread/expand individually inside reciever
+//split into single items and COPY them
+
+const udemy = 'udemy';
+const letters=[...udemy];
+console.log(letters)
+const boys = ['john','peter','bob'];
+const girls=['susan','anna'];
+
+const bestFriend='arnold';
+
+const friends=[...boys,...girls,bestFriend];
+console.log(friends);
+
+//reference
+ //const newFrieds=friends;
+//COPY
+const newFriends=[...friends]
+newFriends[0]='nancy'; 
+console.log(friends);
+console.log(newFriends)
+//ES2018 - ES8 Objects
+
+const person = {name:'john',job:'developer'};
+const newPerson = {...person,city:'rajkot',name:'kush'}
+console.log(person)
+console.log(newPerson);
+*****************************************************************************************
+11 array.from
+//Array.from - NOT ON PROTOTYPE
+
+// from -returns Array Object from an Object
+//with a length property or an iterable object
+//from - turns array-like/ish into array - string nodeList, Set
+const udemy ='udemy'
+
+const text=document.querySelectorAll('.text')
+const newText=Array.from(text).find((item)=>item.textContent === 'person')
+
+const items=Array.from({length:120},(_,index)=>{
+    return index
+})
+const itemsPerPage=14
+const pages=Math.ceil(items.length/itemsPerPage)
+
+const newItems=Array.from({length:pages},(_,index)=>{
+    const start = index * itemsPerPage
+    const tempItems = items.slice(start,start+itemsPerPage)
+    return tempItems
+})
+console.log(newItems)
+
+
+*****************************************************************************************
+ 12-optional_chaining
+
+ const people=[
+    {
+        name:'bob',
+        location:{street:'123 main street',
+        timezone:{offset:'+7:00'}},
+    },
+    { name:'peter',location:{street:'123 pine street'} },
+    {
+        name:'susan',
+        location:{street:'123 Apple  street',
+        timezone:{ offset:'+9:00'}},
+    },
+]
+
+people.forEach((person)=>{
+    // console.log(
+    //     person.location && 
+    //     person.location.timezone &&
+    //     person.location.timezone.offset
+    // )
+    console.log(person?.location?.timezone?.offset)
+})
+*****************************************************************************************
+13-callback
+function makeUppercase(value){
+    console.log(value.toUpperCase())
+}
+
+function reverseString(value){
+    console.log(value.split('').reverse().join(''))
+}
+
+function handleName(name,cb){
+    const fullName=`${name} juthani`
+    cb(fullName)
+}
+// handleName('kush',makeUppercase)
+// handleName('kush',reverseString)
+
+handleName('kush',(value)=>console.log(value))
+
+const btn =document.querySelector('.btn')
+
+btn.addEventListener('click',function(){
+    console.log('hello word')
+})
+
+//array methods, setTimeout,evemt Lsteners etc
+
+*****************************************************************************************
+14 callback_functino_hell
+
+
+//javascript nuggets - callback Hell
+//after 1s first red;
+//after 3s second blue;
+//after 2s third green;
+//IN SEQUENCE!!!!
+
+const first = document.querySelector('.first')
+const second =document.querySelector('.second')
+const third=document.querySelector('.third')
+
+const btn=document.querySelector('.btn')
+
+btn.addEventListener('click',()=>{
+    setTimeout(()=>{
+        first.style.color='red'
+        setTimeout(()=>{
+            second.style.color='blue'
+            setTimeout(()=>{
+                third.style.color='green'
+            },2000)
+        },3000)
+    },1000)
+   
+ 
+})
+
+*****************************************************************************************
+15 promises
+//javascript Nuggets - Promises
+
+//async await
+
+//consume/ use promises
+
+//pending, Rejected, fulfilled
+
+const value=2
+const promise = new Promise((resolve,reject)=>{
+    //resolve([1,2,3])
+    const random=Math.floor(Math.random() * 3);
+    if(random===value){
+        resolve('you guessed correctly')
+    }else{
+        reject('Wrong Number')
+    }
+})
+
+console.log(promise)
+promise.then((data)=>console.log(data)).catch((err)=>console.log(err))
+*****************************************************************************************
+16-promise exampale
+//javascript Nuggets - Promises Example
+//.first - after 1s first red;
+//.second - after 3s second blue
+//.third - after 2s third green;
+//In SEQUENCE!!!!
+
+const btn=document.querySelector('.btn')
+
+btn.addEventListener('click',()=>{
+    addcolor(1000,'.first','red').then(()=>addcolor(3000,'.second','blue')).then(()=>addcolor(2000,'.third','green')).catch((err)=>console.log(err))
+})
+
+function addcolor(time,selector,color){
+    const element = document.querySelector(selector)
+    return new Promise((resolve,reject)=>{
+        if(element){
+            setTimeout(()=>{
+                element.style.color=color
+                resolve()
+            },time)
+        }else{
+            reject(`there is no such element "${selector}"`)
+        }
+    })
+}
+
+
+*****************************************************************************************
+17-async-await
+//Javascript Nuggets
+// async / await
+//async must be present , always returns a promise
+//await waits till promise is settled
+//error handling - try/catch block
+
+// const example = async ()=>{
+//     return 'hello there'
+// }
+
+// async function someFunc(){
+//     const result = await example()
+//     console.log(result)
+// }
+
+// someFunc()
+const users=[
+    {id:1,name:'john'},
+    {id:2,name:'susan'},
+    {id:3,name:'anna'},
+]
+
+const articles=[
+    {userId:1,articles:['one','two','three']},
+    {userId:2,articles:['four','fuve']},
+    {userId:3,articles:['six','seven','eight','nine']},
+]
+
+const getData=async()=>{
+    const user =await getUser('john')
+    const articles = await getArticles(user.id)
+    console.log(articles)
+}
+
+//getUser('john').then((user)=>getArticles(user.id)).then((articles)=>console.log(articles)).catch((err)=>console.log(err))
+
+function getUser(name){
+    return new Promise((resolve,reject)=>{
+        const user = users.find((user)=>user.name===name)
+
+        if(user){
+            return resolve(user)
+        }else{
+            reject(`No Such user with name: ${name}`)
+        }
+    })
+}
+
+function getArticles(userId){
+    return new Promise((resolve,reject)=>{
+        const userArticles=articles.find((user)=>user,userId===userId)
+
+        if(userArticles){
+            return resolve(userArticles.articles)
+        }else{
+            reject('Wrong ID')
+        }
+    })
+}
+
+
+
+*****************************************************************************************
+18-fatch_api
+//javascript Nuggets
+
+//Fetch API - Browser API for HTTP (AJAX) Requests
+//Default - GET Requests, Supports other method as well
+//Returns Promise
+
+const url='https://www.course-api.com/react-tours-project'
+
+//console.log(fetch(url))
+
+//fetch(url).then((resp)=>resp.json()).then((data)=>console.log(data)).catch((err)=>console.log(err))
+
+const getTours = async () =>{
+    try {
+        const resp = await fetch(url)
+        const data = await resp.json()
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+getTours()
+
+*****************************************************************************************
+19-fatch_api_error
+
+//javascript Nuggets
+
+//Fetch API - Browser API for HTTP (AJAX) Requests
+//Default - GET Requests, Supports other method as well
+//Returns Promise
+
+const url='https://www.course-api.com/react-tours-projects'
+
+//console.log(fetch(url))
+
+//fetch(url).then((resp)=>resp.json()).then((data)=>console.log(data)).catch((err)=>console.log(err))
+
+const getTours = async () =>{
+    try {
+        const resp = await fetch(url)
+        if(!resp.ok){
+            const msg = `There was an error "${resp.status} ${resp.statusText}"`
+            throw new Error(msg)
+        }
+        const data = await resp.json()
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const btn = document.querySelector('.btn')
+btn.addEventListener('click',getTours)
+
+*****************************************************************************************
+20 Height-width
+//Javascript Nuggets
+//Width/Height - window any element
+//innerHeight - window
+//innerWidth - window
+//getBoundingClientRect() - any element
+
+console.log('height',window.innerHeight);
+console.log('width',window.innerWidth);
+
+const btn = document.querySelector('.btn')
+const box = document.querySelector('.box')
+
+btn.addEventListener('click',()=>{
+    const dimensions = box.getBoundingClientRect()
+    console.log(dimensions)
+})
+*****************************************************************************************
+21-timestamp
+//Javascript Nuggets
+//Timestamps
+console.log(new Date());
+
+//Unix Time
+//January 1, 1970
+//1s=1000ms
+
+//Date.now()
+console.log(Date.now())
+//new Date().getTime()
+console.log(new Date().getTime());
+//new Date().valueof()
+console.log(new Date().valueOf());
+
+setTimeout(()=>{
+    console.log(Date.now());
+},1000)
+
+//Create id's in Learing apps
+let people = [];
+people=[...people,{id:Date.now(),name:'john'}];
+
+setTimeout(()=>{
+    people=[...people,{id:Date.now(),name:'peter'}];
+    console.log(people);
+})
+//create/get dates
+console.log(new Date(1660714401911));
+const now = Date.now();
+const futureDate = new Date(now + 1000 * 60);
+console.log(futureDate)
+console.log(new Date())
+//difference between dates
+const firstDate = new Date();
+const secondDate = new Date(2022,8,18);
+
+const firestValue=firstDate.getTime();
+const secondValue=secondDate.getTime();
+
+console.log(firestValue)
+console.log(secondValue)
+
+const timeDifference = secondValue-firestValue
+console.log(timeDifference);
+const minutes = timeDifference/(1000*60);
+console.log(minutes)
+
+const hours = timeDifference / (1000 * 60 * 60);
+console.log(hours);
+*****************************************************************************************
+22-ES2022
+//Javascript Nuggets
+//ECMAscript 2022
+// at() - takes integer and returns the item at that index string , array
+
+//Top Level await Basic Example
+
+const scores=[99,90,100];
+const oldLast = scores[scores.length-1]
+console.log(oldLast)
+
+const newLast = scores.at(-1);
+console.log(newLast)
+
+const channel = 'kush juthani'
+console.log(channel.at(0))
+
+*****************************************************************************************
+23-GET element helper
+//Javascript Nuggets
+
+const heading=document.querySelector('.heading');
+//console.log(heading)
+
+const listItems = document.querySelectorAll('.list-item');
+//console.log(listItems)
+
+const getElement = (selector,isList)=>{
+    const el=isList
+    ?[...document.querySelectorAll(selector)]
+    :document.querySelector(selector);
+    /*if(isList){
+        const el = [...document.querySelectorAll(selector)];
+        if(el.length<1){
+            throw new Error(`Please double check selector :${selector}`);
+        }
+        return el;
+    }
+    const el = document.querySelector(selector);
+    if(el) return el;*/
+
+    //if(!isList && el) return el;
+    //if(isList && !el.length < 1) return el;
+
+    if((!isList && el) || (isList && !el.length<1)) return el;
+    throw new Error(`Please double check selector : ${selector}`)
+};
+
+console.log(getElement('.list-item',true));
+console.log(getElement('.list-ite',true));
+console.log(getElement('.heading'))
+console.log(getElement('.headin'))
+
+*****************************************************************************************
+
+
+24 for in
+//"for in " loop- iterate over object properties
+//Not advised to use it on arrays especially if the order is important
+//on arrays use "for of "loop instead
+
+const person = {
+    name:'john',
+    age:25,
+    status:'student',
+};
+
+for(const propertyName in person){
+    console.log(`${propertyName} : ${person[propertyName]}`);
+}
+*****************************************************************************************
+25 object keys,values,entries
+//Three method to convert objects into arrays
+//object.keys()-converts property names into array
+//object.values()-converts property values into array
+//object.entries()-converts both
+
+
+
+const person = {
+    name:'john',
+    age:25,
+    status:'student',
+};
+
+const keys = Object.keys(person);
+console.log(keys);
+
+const values = Object.values(person);
+console.log(values);
+
+const result = Object.entries(person);
+console.log(result);
+
+//Map method
+
+const newResult = result.map((item)=>{
+    const [first,second]=item;
+    console.log(first,second);
+    return first
+})
+
+//console.log(newResult)
+
+//for of
+for(const [first,second] of result){
+    //const[first,second]=item;
+    console.log(first,second)
+}
+*****************************************************************************************
+26-set
+//set object - stores a collection of unique values of any type
+
+//neww set()
+//add(value)
+//delete(value)
+//clear()
+//has(value)
+
+
+
+const unique = new Set()
+
+const random = 'third';
+unique.add('first');
+unique.add('second');
+unique.add(random);
+unique.add('first');
+unique.add(4);
+
+// const result =unique.delete('third');
+// console.log(result);
+
+const result =unique.delete('five');
+console.log(result);
+
+const isValue = unique.has(4);
+console.log(isValue);
+
+console.log(unique)
+
+//example of set
+//new Set()-accepts iterable objects
+
+const products=[
+    {
+        title:'high-back bench',
+        company:'ikea',
+    },
+    {
+        title:'albany table',
+        company:'marcos',
+    },
+    {
+        title:'accent chair',
+        company:'caressa',
+    },
+    {
+        title:'wooden table',
+        company:'ikea',
+    },
+]
+
+// const companies = products.map((item)=>item.company);
+// console.log(companies)
+// const uniqueCompanies = new Set(companies);
+// console.log(uniqueCompanies)
+// const finalCompanies=['all',...uniqueCompanies];
+// console.log(finalCompanies);
+
+const result1 =['all',...new Set(products.map((item)=>item.company))];
+console.log(result1);
+*****************************************************************************************
+27- string includes
+//String includes() - check if a string contains another string
+
+const product=[
+    {title:'Modern Poster'},
+    {title:'Bar stool'},
+    {title:'Armchair'},
+    {title:'Leather chair'},
+];
+
+const text = 'a';
+const filteredProducts=product.filter((product)=>product.title.toLowerCase().includes(text));
+console.log(filteredProducts)
+// const firstName='john';
+
+// const product = {
+//     title:'Leather chair',
+// };
+
+// const result = product.title.includes('le');
+
+// console.log(result);
+*****************************************************************************************
+28-array_includes
+//Array includes()-checks if the item is an array
+//useful in the conditional statements
+
+const groceries=['milk','bread','meat']
+
+let randomItem ='lemon';
+randomItem='milk';
+
+//const isIncluded = groceries.includes(randomItem,1)
+//console.log(isIncluded);
+
+if(groceries.includes(randomItem)){
+    console.log(`Yeah it's on the list`);
+}
